@@ -17,10 +17,10 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('-'*40)
-    print('Hello! Let\'s explore some US bikeshare data!')
+    print(' hello world '')
     # initialize return values to empty strings
     city, month, day = '', '', '' 
-    
+
     # loop until the entered city name is valid
     cities = ['chicago','new york city','washington']
     while city not in cities:
@@ -50,7 +50,7 @@ def get_filters():
 
     print('-'*40)
     return city, month, day
-        
+
 
 def load_data(city, month, day):
     """
@@ -68,7 +68,7 @@ def load_data(city, month, day):
         try:
             f = os.path.join(os.getcwd(), CITY_DATA[city]) # define file path of dataset for user-entered city
             df = pd.read_csv(f, dtype=str) # Read in every field as a string initially so we can define each of our field types otherwise
-            
+
             # Format data type of fields
             for col in df.columns.values:
                 if 'Time' in col:
@@ -78,16 +78,16 @@ def load_data(city, month, day):
                 if col == 'Birth Year':
                     df[col] = pd.to_numeric(df[col], errors='coerce')
 
-            
+
             # Note: the start day and end day are always the same day; no dataset contains an instance of overnight travel
             #       --as such, we only need to worry about extracting the month and day from one of the start/end time stamp fields
             df['Month'] = pd.DatetimeIndex(df['Start Time']).month_name().str.lower()
             df['Day'] = pd.DatetimeIndex(df['Start Time']).day_name().str.lower()
             df['Start Hour'] = pd.DatetimeIndex(df['Start Time']).strftime('%H')
-            
+
             # Drop our carried in index with useless values
             df = df.drop(columns=['Unnamed: 0'])
-            
+
             # Condition on user entered filters
             if (month == day == 'all'):
                 return df.reset_index(drop=True)
@@ -97,15 +97,15 @@ def load_data(city, month, day):
                 return df.loc[df['Day'] == day].reset_index(drop=True)
             else:
                 return df.loc[(df['Day'] == day) & (df['Month'] == month)].reset_index(drop=True)
-            
+
         except FileNotFoundError:
             print('File ' + f + ' does not exist. Program is exiting and must be restarted after file has been saved to the referenced file path.' )
             os._exit(os.EX_OK)
-            
+
 def view_data(df):
     """
     Asks user if they would like to view the first 5 rows of data and each successive set of 5 rows in the dataset
-    
+
     Args:
         (Pandas Dataframe) df - dataframe being viewed/analyzed by the user
     """
@@ -122,8 +122,8 @@ def view_data(df):
         if s.lower() != 'yes':
             print('\n User has exited viewing the dataset 5 records at a time. \n')
             break
-    
-    
+
+
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
     if df.shape[0] > 0:
@@ -141,7 +141,7 @@ def time_stats(df):
 
         print("\nThis took %s seconds." % (time.time() - start_time))
         print('-'*40)
-        
+
         view_data(df)
     else:
         print('There is no available data to compute time stats for the combination of city, month, and day which were entered. \n')
@@ -165,7 +165,7 @@ def station_stats(df):
 
         print("\nThis took %s seconds." % (time.time() - start_time))
         print('-'*40)
-        
+
         view_data(df)
     else:
         print('There is no available data to compute station stats for the combination of city, month, and day which were entered. \n')
@@ -185,18 +185,18 @@ def trip_duration_stats(df):
 
         print("\nThis took %s seconds." % (time.time() - start_time))
         print('-'*40)
-        
+
         view_data(df)
     else:
         print('There is no available data to compute trip duration stats for the combination of city, month, and day which were entered. \n')
         print('-'*40)
-        
+
 def user_stats(df):
     """Displays statistics on bikeshare users."""
     if df.shape[0] > 0:
         print('\nCalculating User Stats...\n')
         start_time = time.time()
-        
+
         colNames = df.columns.values
         if 'User Type' in colNames:
             # Display counts of user types
@@ -224,7 +224,7 @@ def user_stats(df):
 
         print("\nThis took %s seconds." % (time.time() - start_time))
         print('-'*40)
-        
+
         view_data(df)
     else:
         print('There is no available data to compute trip duration stats for the combination of city, month, and day which were entered. \n')
