@@ -4,10 +4,10 @@
 5.12.2022.
 
 ### Project Title
-Github
+Exploring US Bikeshare data
 
 ### Description
-Github repo
+Github repo that contains original and altered versions of the python code that I wrote for project 2.
 
 ### Files used
 bikeshare_2_AD.py
@@ -15,4 +15,6 @@ bikeshare_2_AD.py
 ### Credits
 docs.gitlab.com
 udacity
+atom
+git bash
 
